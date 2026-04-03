@@ -3,153 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invila™ | Smart Gateway</title>
+    <title>Invila™ Smart Gateway | Dashboard Strategis</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>F
-        .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-        .hero-text { transition: all 0.5s ease-in-out; }
-<style>
-    /* Latar belakang gelap pekat untuk seluruh area Hero */
-    .hero-section {
-        background-color: #020617 !important; /* Midnight Blue */
-        background-image: radial-gradient(circle at top right, #1e293b, #020617) !important;
-        min-height: 80vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    /* Teks glow agar tajam di mata */
-    .headline-bold {
-        color: #ffffff !important;
-        text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        line-height: 1.1;
-    }
-
-    /* Overlay halus untuk video */
-    .video-mask {
-        position: relative;
-        overflow: hidden;
-        border: 2px solid rgba(59, 130, 246, 0.5);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-</style>
-
-<header class="bg-warroom text-white py-16 px-6 shadow-2xl">
-    <div class="max-w-4xl mx-auto">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         
-        <div id="video-container" class="hidden mb-10 rounded-2xl overflow-hidden border-4 border-blue-500/20 shadow-2xl bg-black">
-            <video id="main-player" autoplay muted loop playsinline class="w-full h-auto video-darken">
-                <source src="KIW%201.mp4" type="video/mp4">
-            </video>
-            <p class="bg-blue-950 text-blue-300 text-[10px] py-2 text-center font-mono tracking-[0.2em] uppercase">
-                System Context: Real-time Analysis at <span class="comp-name">Unit</span>
-            </p>
-        </div>
+        body { font-family: 'Inter', sans-serif; background-color: #020617; }
 
-        <h2 id="welcome-msg" class="text-blue-400 font-bold mb-4 tracking-[0.3em] uppercase text-xs">
-            DATA VALIDATION IN PROGRESS...
-        </h2>
-        
-        <h1 id="main-headline" class="text-4xl md:text-6xl font-black mb-6 leading-tight text-glow">
-            Strategic Water Infrastructure
-        </h1>
-        
-        <p id="sub-headline" class="text-lg text-slate-400 mb-10 max-w-2xl leading-relaxed">
-            Mempersiapkan laporan teknis untuk Pak Beni...
-        </p>
-        
-        <div class="flex flex-col md:flex-row gap-5">
-            <button onclick="downloadReport()" class="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-xl font-extrabold shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all active:scale-95">
-                DOWNLOAD <span id="btn-report-type">REPORT</span>
-            </a>
-            <a id="wa-link" href="#" class="bg-slate-800/50 backdrop-blur-md border border-slate-700 hover:bg-slate-700 text-white px-10 py-4 rounded-xl font-bold transition-all text-center">
-                Consult with Engineer
-            </a>
-        </div>
-    </div>
-</header>
+        /* Background War Room: Gelap, Mewah, Fokus */
+        .war-room-bg {
+            background-color: #020617;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(30, 58, 138, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(30, 58, 138, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+        }
 
-    <section class="py-16 px-6 max-w-4xl mx-auto">
-        <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col md:flex-row gap-8 items-center border border-slate-100 text-left">
-            <img src="https://via.placeholder.com/150" alt="Piator Simbolon" class="w-24 h-24 rounded-full bg-slate-200 border-4 border-blue-100">
-            <div>
-                <h3 class="text-xl font-bold">Piator Simbolon</h3>
-                <p class="text-blue-600 text-sm font-medium mb-4">Senior Water & Strategic Engineer</p>
-                <p class="italic text-slate-600 border-l-4 border-blue-500 pl-4 text-sm">
-                    "Engineering is about Reliability. Kami mendesain sistem Invila™ agar Anda bisa fokus pada target produksi utama."
-                </p>
+        /* Teks Glow agar tajam dan tidak silau */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glassmorphism untuk Card */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        /* Video Dark Overlay */
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3), rgba(2, 6, 23, 0.7));
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="text-slate-200">
+
+    <div class="war-room-bg flex flex-col">
+        
+        <nav class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black text-white">I</div>
+                <span class="text-xl font-black tracking-tighter text-white">INVILA<span class="text-blue-500">™</span></span>
             </div>
-        </div>
-    </section>
+            <div class="hidden md:block text-[10px] font-bold tracking-[0.3em] text-slate-500 uppercase">
+                Secure Strategic Gateway v3.0
+            </div>
+        </nav>
 
-<script>
-    // 1. GANTI DENGAN URL WEB APP BAPAK (DARI GOOGLE APPS SCRIPT)
-    const scriptURL = 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI';
+        <main class="flex-grow flex flex-col items-center px-6 py-12 md:py-20">
+            <div class="max-w-4xl w-full space-y-12">
+                
+                <div class="space-y-4 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-widest">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        <span id="auth-status">Verifying Access...</span>
+                    </div>
+                    
+                    <h1 id="main-headline" class="text-4xl md:text-7xl font-black text-white leading-[1.1] tracking-tight text-glow">
+                        Strategic Water Infrastructure
+                    </h1>
+                    
+                    <p id="sub-headline" class="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed">
+                        Mempersiapkan dashboard validasi teknis untuk unit industri Anda.
+                    </p>
+                </div>
 
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // 2. TANGKAP DATA DARI URL
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('name') || "Rekan Strategic";
-        const role = (params.get('role') || "Executive").toUpperCase();
-        const comp = params.get('comp') || "Mitra Industri";
+                <div id="video-wrapper" class="hidden">
+                    <div class="video-container rounded-3xl bg-slate-900">
+                        <div class="video-overlay"></div>
+                        <video id="main-player" autoplay muted loop playsinline class="w-full h-auto grayscale-[20%]">
+                            <source src="KIW%201.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute bottom-4 left-6 z-20 flex items-center gap-3">
+                            <div class="px-3 py-1 bg-black/60 backdrop-blur-md rounded border border-white/10 text-[10px] font-mono text-white">
+                                LIVE CONTEXT: <span class="comp-name">INDUSTRIAL PLANT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        // 3. UPDATE TEKS PENYAMBUTAN & PERUSAHAAN
-        document.getElementById('welcome-msg').innerText = `SELAMAT DATANG PAK ${name} (${role})`;
-        const compElements = document.getElementsByClassName('comp-name');
-        for(let el of compElements) { el.innerText = comp; }
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="downloadReport()" class="group relative bg-blue-600 hover:bg-blue-500 text-white p-5 rounded-2xl font-black transition-all shadow-[0_20px_40px_-15px_rgba(37,99,235,0.4)] active:scale-95">
+                        <div class="flex items-center justify-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="Drawing 4 12v8m0 0l-4-4m4 4l4-4m-4-4V4"></path></svg>
+                            <span class="uppercase tracking-tighter text-lg">Download <span id="btn-report-type">Report</span></span>
+                        </div>
+                    </button>
+                    
+                    <a id="wa-link" href="#" class="glass-card hover:bg-slate-800 text-white p-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 group">
+                        <svg class="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <span>Konsultasi Strategis</span>
+                    </a>
+                </div>
 
-        // 4. LOGIKA TAMPILAN (CFO VS FM)
-        const videoBox = document.getElementById('video-container');
-        const player = document.getElementById('main-player');
+                <div class="glass-card p-8 rounded-3xl flex flex-col md:flex-row gap-8 items-center border border-white/5">
+                    <div class="relative">
+                        <div class="w-24 h-24 rounded-2xl bg-blue-600 flex items-center justify-center text-4xl font-black text-white shadow-lg rotate-3">PS</div>
+                        <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 border-4 border-slate-900 rounded-full"></div>
+                    </div>
+                    <div class="text-center md:text-left space-y-2">
+                        <h3 class="text-2xl font-bold text-white">Piator Simbolon</h3>
+                        <p class="text-blue-400 font-bold text-sm tracking-widest uppercase">Senior Lead System Architect</p>
+                        <p class="text-slate-400 italic text-sm max-w-md leading-relaxed">
+                            "Kami membangun infrastruktur yang tidak hanya memproses air, tapi juga mengamankan stabilitas produksi dan efisiensi EBITDA Anda."
+                        </p>
+                    </div>
+                </div>
 
-        if (role === 'CFO') {
-            document.getElementById('main-headline').innerHTML = `EBITDA Protection & <br>Capital Efficiency di ${comp}`;
-            document.getElementById('sub-headline').innerText = "Model Zero-CapEx kami mengeliminasi biaya investasi berat dan mengubah tagihan PDAM menjadi efisiensi laba bersih secara instan.";
-            document.getElementById('btn-report-type').innerText = "Financial Impact Report";
-            if (videoBox) videoBox.classList.add('hidden'); // Sembunyikan video untuk CFO
-        } else {
-            // TAMPILAN UNTUK FM (BENI)
-            document.getElementById('main-headline').innerHTML = `99.98% Water Availability & <br>Operational Stability di ${comp}`;
-            document.getElementById('sub-headline').innerText = `Dirancang khusus untuk standar keandalan Plant Manager di ${comp}. Sistem Autopilot SCADA-IoT membebaskan tim Anda dari rutinitas maintenance.`;
-            document.getElementById('btn-report-type').innerText = "Technical Hero Report";
+            </div>
+        </main>
+
+        <footer class="p-8 text-center text-slate-600 text-[10px] tracking-[0.4em] uppercase">
+            © 2026 INVILA WATER INFRASTRUCTURE | SECURE INTERFACE
+        </footer>
+    </div>
+
+    <script>
+        // 1. MASUKKAN URL GOOGLE APPS SCRIPT BAPAK DI SINI
+        const scriptURL = 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI';
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name') || "Rekan";
+            const role = (params.get('role') || "Executive").toUpperCase();
+            const comp = params.get('comp') || "Mitra Industri";
+
+            // Update Teks Penyambutan
+            document.getElementById('auth-status').innerText = `AUTHENTICATED: PAK ${name} (${role})`;
             
-            // MUNCULKAN VIDEO UNTUK FM
-            if (videoBox) {
-                videoBox.classList.remove('hidden');
+            const compElements = document.getElementsByClassName('comp-name');
+            for(let el of compElements) { el.innerText = comp; }
+
+            // Logika Tampilan CFO vs FM
+            const videoWrapper = document.getElementById('video-wrapper');
+            const player = document.getElementById('main-player');
+
+            if (role === 'CFO') {
+                document.getElementById('main-headline').innerHTML = `EBITDA Protection & <br><span class="text-blue-500">Capital Efficiency</span> di ${comp}`;
+                document.getElementById('sub-headline').innerText = "Model Zero-CapEx kami mengeliminasi biaya investasi berat dan meningkatkan laba bersih secara instan.";
+                document.getElementById('btn-report-type').innerText = "Financial Report";
+            } else {
+                // Tampilan untuk FM (Beni)
+                document.getElementById('main-headline').innerHTML = `99.98% Water Stability & <br><span class="text-blue-500">Auto-Pilot System</span> di ${comp}`;
+                document.getElementById('sub-headline').innerText = `Dirancang untuk standar keandalan tinggi Plant Manager di ${comp}. Sistem SCADA-IoT kami bekerja sepenuhnya secara otomatis.`;
+                document.getElementById('btn-report-type').innerText = "Hero Report";
+                
+                // Munculkan Video
+                videoWrapper.classList.remove('hidden');
                 if (player) player.play().catch(e => console.log("Autoplay ditahan"));
             }
+
+            // Update Link WA
+            const pesanWA = `Halo Pak Piator, saya ${name} (${role}) dari ${comp}. Saya sedang meninjau dashboard Invila™ dan ingin diskusi teknis lebih lanjut.`;
+            document.getElementById('wa-link').href = `https://wa.me/6285890135859?text=${encodeURIComponent(pesanWA)}`;
+
+            // Log Kunjungan ke Google Sheets
+            if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
+                fetch(`${scriptURL}?name=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}&comp=${encodeURIComponent(comp)}&action=Login Dashboard`)
+                    .catch(e => console.error('Dashboard Error'));
+            }
+        });
+
+        function downloadReport() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name') || "Unknown";
+            const role = (params.get('role') || "").toUpperCase();
+            
+            const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
+            let fileName = (role === 'CFO') ? "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf" : "THE_HERO_REPORT_VALIDATION.pdf";
+
+            // Kirim log download ke dashboard
+            if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
+                fetch(`${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`);
+            }
+
+            alert(`Mempersiapkan dokumen strategis untuk ${name}...\nSilakan periksa folder unduhan Anda.`);
+            window.open(baseUrl + fileName, '_blank');
         }
-
-        // 5. UPDATE LINK WHATSAPP DINAMIS
-        const pesanWA = `Halo Pak Piator, saya ${name} (${role}) dari ${comp}. Saya sedang mereview link Invila™ dan ingin diskusi teknis lebih lanjut.`;
-        document.getElementById('wa-link').href = `https://wa.me/6285890135859?text=${encodeURIComponent(pesanWA)}`;
-
-        // 6. KIRIM DATA KE DASHBOARD (LOG KUNJUNGAN)
-        if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
-            fetch(`${scriptURL}?name=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}&comp=${encodeURIComponent(comp)}&action=Halaman Dilihat`)
-                .catch(error => console.error('Error Dashboard!', error.message));
-        }
-    });
-
-    // 7. FUNGSI DOWNLOAD & CATAT KE DASHBOARD
-    function downloadReport() {
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('name') || "Unknown";
-        const role = (params.get('role') || "").toUpperCase();
-        const comp = params.get('comp') || "Industrial";
-        
-        const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
-        let fileName = (role === 'CFO') ? "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf" : "THE_HERO_REPORT_VALIDATION.pdf";
-
-        // Kirim log download ke dashboard
-        if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
-            fetch(`${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`);
-        }
-
-        alert(`Mempersiapkan Dokumen Khusus ${comp}...\nSilakan cek folder Download Anda.`);
-        window.open(baseUrl + fileName, '_blank');
-    }
-</script>
+    </script>
 </body>
 </html>
