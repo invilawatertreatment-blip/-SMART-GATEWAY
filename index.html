@@ -11,6 +11,23 @@
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-900">
+    
+    <div id="video-container" class="hidden mt-6 rounded-xl overflow-hidden shadow-2xl border-4 border-blue-400/20">
+    <video autoplay muted loop class="w-full h-auto">
+        <source src="https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/KIW 1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p class="bg-blue-900 text-white text-xs p-2 text-center font-mono uppercase tracking-widest">
+        Live Context: Site Condition at KIW Industrial Estate
+    </p>
+</div>
+
+<script>
+    // Munculkan video jika role-nya adalah FM
+    if (role === 'FM') {
+        document.getElementById('video-container').classList.remove('hidden');
+    }
+</script>
 
     <nav class="p-6 flex justify-between items-center bg-white shadow-sm">
         <div class="text-2xl font-bold tracking-tighter text-blue-900">INVILA™</div>
@@ -90,10 +107,26 @@
         document.getElementById('wa-link').href = `https://wa.me/${piatorWA}?text=${encodeURIComponent(pesanWA)}`;
 
         // 5. SIMULASI DOWNLOAD REPORT
-        function downloadReport() {
-            const docName = (role === 'CFO') ? `FINANCIAL_IMPACT_${comp}_${name}.pdf` : `HERO_REPORT_BENI_${comp}.pdf`;
-            alert(`Sistem Sedang Men-Generate Dokumen: \n\n${docName}\n\n(File ini sudah menyertakan Analisis COI khusus untuk ${comp})`);
-        }
+       function downloadReport() {
+    // Jalur folder baru di assets/docs/
+    const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
+    let fileName = "";
+
+    // Logika pemilihan file berdasarkan Role (CFO vs FM)
+    if (role === 'CFO') {
+        fileName = "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf";
+    } else {
+        fileName = "THE_HERO_REPORT_VALIDATION.pdf";
+    }
+
+    // Eksekusi Download Riil
+    const link = document.createElement('a');
+    link.href = baseUrl + fileName;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
     </script>
 </body>
 </html>
