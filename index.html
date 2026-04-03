@@ -133,8 +133,8 @@
     </div>
 
     <script>
-        // 1. MASUKKAN URL GOOGLE APPS SCRIPT BAPAK DI SINI
-        const scriptURL = 'MASUKKAN_URLhttps://script.google.com/macros/s/AKfycbx262a9v20JI0Ow_1kcfGRAd8W6GGNl7xqKlSb374BlIbuoghxmkcAenOVtUp6DuMnn/exec_WEB_APP_BAPAK_DI_SINI';
+        // 1. URL GOOGLE APPS SCRIPT BAPAK
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbx262a9v20JI0Ow_1kcfGRAd8W6GGNl7xqKlSb374BlIbuoghxmkcAenOVtUp6DuMnn/exec';
 
         window.addEventListener('DOMContentLoaded', (event) => {
             const params = new URLSearchParams(window.location.search);
@@ -163,7 +163,7 @@
                 document.getElementById('btn-report-type').innerText = "Hero Report";
                 
                 // Munculkan Video
-                videoWrapper.classList.remove('hidden');
+                if(videoWrapper) videoWrapper.classList.remove('hidden');
                 if (player) player.play().catch(e => console.log("Autoplay ditahan"));
             }
 
@@ -171,10 +171,10 @@
             const pesanWA = `Halo Pak Piator, saya ${name} (${role}) dari ${comp}. Saya sedang meninjau dashboard Invila™ dan ingin diskusi teknis lebih lanjut.`;
             document.getElementById('wa-link').href = `https://wa.me/6285890135859?text=${encodeURIComponent(pesanWA)}`;
 
-            // Log Kunjungan ke Google Sheets
-            if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
-                fetch(`${scriptURL}?name=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}&comp=${encodeURIComponent(comp)}&action=Login Dashboard`)
-                    .catch(e => console.error('Dashboard Error'));
+            // Log Kunjungan ke Google Sheets (DITAMBAH BYPASS CORS)
+            if (scriptURL && scriptURL.includes('script.google.com')) {
+                const finalUrl = `${scriptURL}?name=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}&comp=${encodeURIComponent(comp)}&action=Login Dashboard`;
+                fetch(finalUrl, { method: 'GET', mode: 'no-cors' }).catch(e => console.error('Dashboard Error'));
             }
         });
 
@@ -186,9 +186,10 @@
             const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
             let fileName = (role === 'CFO') ? "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf" : "THE_HERO_REPORT_VALIDATION.pdf";
 
-            // Kirim log download ke dashboard
-            if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
-                fetch(`${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`);
+            // Kirim log download ke dashboard (DITAMBAH BYPASS CORS)
+            if (scriptURL && scriptURL.includes('script.google.com')) {
+                const dlUrl = `${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`;
+                fetch(dlUrl, { method: 'GET', mode: 'no-cors' });
             }
 
             alert(`Mempersiapkan dokumen strategis untuk ${name}...\nSilakan periksa folder unduhan Anda.`);
