@@ -178,7 +178,7 @@
             }
         });
 
-        function downloadReport() {
+        function function downloadReport() {
             const params = new URLSearchParams(window.location.search);
             const name = params.get('name') || "Unknown";
             const role = (params.get('role') || "").toUpperCase();
@@ -186,14 +186,15 @@
             const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
             let fileName = (role === 'CFO') ? "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf" : "THE_HERO_REPORT_VALIDATION.pdf";
 
-            // Kirim log download ke dashboard (DITAMBAH BYPASS CORS)
+            // Kirim log download ke dashboard
             if (scriptURL && scriptURL.includes('script.google.com')) {
                 const dlUrl = `${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`;
                 fetch(dlUrl, { method: 'GET', mode: 'no-cors' });
             }
 
-            alert(`Mempersiapkan dokumen strategis untuk ${name}...\nSilakan periksa folder unduhan Anda.`);
+            // Buka dokumen langsung tanpa pop-up peringatan
             window.open(baseUrl + fileName, '_blank');
+        }
         }
     </script>
 </body>
