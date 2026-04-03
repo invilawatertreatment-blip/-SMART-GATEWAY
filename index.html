@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invila™ | Strategic Water Infrastructure</title>
+    <title>Invila™ | Smart Gateway</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
@@ -11,46 +11,38 @@
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-900">
-    
-    <div id="video-container" class="hidden mt-6 rounded-xl overflow-hidden shadow-2xl border-4 border-blue-400/20">
-    <video autoplay muted loop class="w-full h-auto">
-        <source src="https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/KIW 1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <p class="bg-blue-900 text-white text-xs p-2 text-center font-mono uppercase tracking-widest">
-        Live Context: Site Condition at KIW Industrial Estate
-    </p>
-</div>
-
-<script>
-    // Munculkan video jika role-nya adalah FM
-    if (role === 'FM') {
-        document.getElementById('video-container').classList.remove('hidden');
-    }
-</script>
 
     <nav class="p-6 flex justify-between items-center bg-white shadow-sm">
         <div class="text-2xl font-bold tracking-tighter text-blue-900">INVILA™</div>
-        <div id="badge-status" class="hidden md:block px-4 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
+        <div class="hidden md:block px-4 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
             Validated by Senior Engineer: Piator Simbolon
         </div>
     </nav>
 
-    <header class="gradient-bg text-white py-20 px-6">
+    <header class="gradient-bg text-white py-16 px-6">
         <div class="max-w-4xl mx-auto">
-            <h2 id="welcome-msg" class="text-blue-400 font-semibold mb-4 tracking-widest uppercase">
-                Selamat Datang
+            <div id="video-container" class="hidden mb-8 rounded-xl overflow-hidden shadow-2xl border-4 border-blue-400/20">
+                <video id="player" autoplay muted loop class="w-full h-auto">
+                    <source src="https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/KIW%201.mp4" type="video/mp4">
+                </video>
+                <p class="bg-blue-900/50 text-white text-[10px] p-2 text-center font-mono uppercase tracking-widest">
+                    Live Context: Site Condition at <span class="comp-name">Unit</span>
+                </p>
+            </div>
+
+            <h2 id="welcome-msg" class="text-blue-400 font-semibold mb-4 tracking-widest uppercase text-sm">
+                MEMPERSIAPKAN DASHBOARD...
             </h2>
             <h1 id="main-headline" class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                99.98% Water Availability & <br>Zero-CapEx Infrastructure
+                Strategic Water Infrastructure
             </h1>
             <p id="sub-headline" class="text-lg text-slate-300 mb-10 max-w-2xl">
-                Mentransformasi liabilitas pengelolaan air menjadi aset efisiensi operasional divalidasi oleh Senior Strategic Engineer.
+                Memuat data validasi teknis...
             </p>
             
             <div class="flex flex-col md:flex-row gap-4">
                 <button onclick="downloadReport()" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-lg font-bold shadow-lg transition">
-                    Download <span id="btn-report-type">Strategic Report</span>
+                    Download <span id="btn-report-type">Report</span>
                 </button>
                 <a id="wa-link" href="#" class="border border-slate-500 hover:bg-white/10 text-white px-8 py-4 rounded-lg font-bold transition flex items-center justify-center">
                     Chat with Our Strategic Engineer
@@ -60,73 +52,61 @@
     </header>
 
     <section class="py-16 px-6 max-w-4xl mx-auto">
-        <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col md:flex-row gap-8 items-center border border-slate-100">
-            <img src="https://via.placeholder.com/150" alt="Piator Simbolon" class="w-32 h-32 rounded-full bg-slate-200 border-4 border-blue-100">
+        <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col md:flex-row gap-8 items-center border border-slate-100 text-left">
+            <img src="https://via.placeholder.com/150" alt="Piator Simbolon" class="w-24 h-24 rounded-full bg-slate-200 border-4 border-blue-100">
             <div>
-                <h3 class="text-2xl font-bold mb-2">Piator Simbolon</h3>
-                <p class="text-blue-600 font-medium mb-4">Senior Water & Strategic Engineer</p>
-                <p class="italic text-slate-600 border-l-4 border-blue-500 pl-4">
-                    "Engineering is about Reliability, not just Technology. Kami mendesain sistem Invila™ untuk bekerja mandiri (Autopilot) agar Anda bisa fokus pada target produksi utama."
+                <h3 class="text-xl font-bold">Piator Simbolon</h3>
+                <p class="text-blue-600 text-sm font-medium mb-4">Senior Water & Strategic Engineer</p>
+                <p class="italic text-slate-600 border-l-4 border-blue-500 pl-4 text-sm">
+                    "Engineering is about Reliability. Kami mendesain sistem Invila™ agar Anda bisa fokus pada target produksi utama."
                 </p>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center text-slate-400 text-sm">
-        &copy; 2026 Invila™ Strategic Room. Powered by Zero-CapEx Water Infrastructure.
-    </footer>
-
     <script>
-        // 1. AMBIL PARAMETER "SAKTI" DARI URL
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('name') || "Rekan Strategic";
-        const role = params.get('role') || "Executive";
-        const comp = params.get('comp') || "Mitra Industri";
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name') || "Rekan Strategic";
+            const role = params.get('role') || "Executive";
+            const comp = params.get('comp') || "Mitra Industri";
 
-        // 2. DATA IDENTITAS PIATOR & TARGET
-        const piatorWA = "6285890135859"; // No WA Bapak
-        const targetWA = (role === 'CFO') ? "6281333344330" : "6289675809427";
+            // Update Semua Teks secara Dinamis
+            document.getElementById('welcome-msg').innerText = `SELAMAT DATANG PAK ${name} (${role})`;
+            
+            const compElements = document.getElementsByClassName('comp-name');
+            for(let el of compElements) { el.innerText = comp; }
 
-        // 3. LOGIKA PERUBAHAN TAMPILAN DINAMIS
-        document.getElementById('welcome-msg').innerText = `Selamat Datang Pak ${name} (${role})`;
-        
-        if (role === 'CFO') {
-            // Tampilan LP1 (Financial)
-            document.getElementById('main-headline').innerHTML = `EBITDA Protection & <br>Capital Efficiency di ${comp}`;
-            document.getElementById('sub-headline').innerText = "Model Zero-CapEx kami mengeliminasi biaya investasi berat dan mengubah tagihan PDAM menjadi efisiensi laba bersih secara instan.";
-            document.getElementById('btn-report-type').innerText = "Financial Impact Report";
-        } else {
-            // Tampilan LP2 (Technical - FM Beni)
-            document.getElementById('main-headline').innerHTML = `99.98% Water Availability & <br>Operational Stability di ${comp}`;
-            document.getElementById('sub-headline').innerText = `Dirancang khusus untuk standar keandalan Plant Manager di ${comp}. Sistem Autopilot SCADA-IoT membebaskan tim Anda dari rutinitas maintenance.`;
-            document.getElementById('btn-report-type').innerText = "Technical Hero Report";
+            if (role === 'CFO') {
+                document.getElementById('main-headline').innerHTML = `EBITDA Protection & <br>Capital Efficiency di ${comp}`;
+                document.getElementById('sub-headline').innerText = "Model Zero-CapEx kami mengeliminasi biaya investasi berat dan mengubah tagihan PDAM menjadi efisiensi laba bersih secara instan.";
+                document.getElementById('btn-report-type').innerText = "Financial Impact Report";
+            } else {
+                // Tampilan untuk FM Beni
+                document.getElementById('main-headline').innerHTML = `99.98% Water Availability & <br>Operational Stability di ${comp}`;
+                document.getElementById('sub-headline').innerText = `Dirancang khusus untuk standar keandalan Plant Manager di ${comp}. Sistem Autopilot SCADA-IoT membebaskan tim Anda dari rutinitas maintenance.`;
+                document.getElementById('btn-report-type').innerText = "Technical Hero Report";
+                
+                // Munculkan Video untuk FM
+                document.getElementById('video-container').classList.remove('hidden');
+            }
+
+            // Link WA Ke Pak Piator
+            const pesanWA = `Halo Pak Piator, saya ${name} (${role}) dari ${comp}. Saya sedang mereview link Invila™ dan ingin diskusi teknis lebih lanjut.`;
+            document.getElementById('wa-link').href = `https://wa.me/6285890135859?text=${encodeURIComponent(pesanWA)}`;
+        });
+
+        function downloadReport() {
+            const params = new URLSearchParams(window.location.search);
+            const role = params.get('role');
+            const comp = params.get('comp') || "Industrial";
+            const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
+            
+            let fileName = (role === 'CFO') ? "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf" : "THE_HERO_REPORT_VALIDATION.pdf";
+            
+            alert(`Mempersiapkan Dokumen Khusus ${comp}...\nSilakan cek folder Download Anda.`);
+            window.open(baseUrl + fileName, '_blank');
         }
-
-        // 4. GENERATE LINK WHATSAPP DINAMIS (Piator adalah penerima)
-        const pesanWA = `Halo Pak Piator, saya ${name} (${role}) dari ${comp}. Saya sedang mereview link Invila™ dan ingin diskusi teknis lebih lanjut terkait site audit.`;
-        document.getElementById('wa-link').href = `https://wa.me/${piatorWA}?text=${encodeURIComponent(pesanWA)}`;
-
-        // 5. SIMULASI DOWNLOAD REPORT
-       function downloadReport() {
-    // Jalur folder baru di assets/docs/
-    const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
-    let fileName = "";
-
-    // Logika pemilihan file berdasarkan Role (CFO vs FM)
-    if (role === 'CFO') {
-        fileName = "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf";
-    } else {
-        fileName = "THE_HERO_REPORT_VALIDATION.pdf";
-    }
-
-    // Eksekusi Download Riil
-    const link = document.createElement('a');
-    link.href = baseUrl + fileName;
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
     </script>
 </body>
 </html>
