@@ -65,48 +65,32 @@
     </section>
 
     <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            const params = new URLSearchParams(window.location.search);
-            const name = params.get('name') || "Rekan Strategic";
-            const role = params.get('role') || "Executive";
-            const comp = params.get('comp') || "Mitra Industri";
+       // Gantilah URL di bawah dengan URL Web App dari Google Apps Script Bapak
+const scriptURL = 'URL_WEB_APP_BAPAK_DI_SINI';
 
-            // Update Semua Teks secara Dinamis
-            document.getElementById('welcome-msg').innerText = `SELAMAT DATANG PAK ${name} (${role})`;
-            
-            const compElements = document.getElementsByClassName('comp-name');
-            for(let el of compElements) { el.innerText = comp; }
+window.addEventListener('DOMContentLoaded', (event) => {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const role = params.get('role');
+    const comp = params.get('comp');
 
-            if (role === 'CFO') {
-                document.getElementById('main-headline').innerHTML = `EBITDA Protection & <br>Capital Efficiency di ${comp}`;
-                document.getElementById('sub-headline').innerText = "Model Zero-CapEx kami mengeliminasi biaya investasi berat dan mengubah tagihan PDAM menjadi efisiensi laba bersih secara instan.";
-                document.getElementById('btn-report-type').innerText = "Financial Impact Report";
-            } else {
-                // Tampilan untuk FM Beni
-                document.getElementById('main-headline').innerHTML = `99.98% Water Availability & <br>Operational Stability di ${comp}`;
-                document.getElementById('sub-headline').innerText = `Dirancang khusus untuk standar keandalan Plant Manager di ${comp}. Sistem Autopilot SCADA-IoT membebaskan tim Anda dari rutinitas maintenance.`;
-                document.getElementById('btn-report-type').innerText = "Technical Hero Report";
-                
-                // Munculkan Video untuk FM
-                document.getElementById('video-container').classList.remove('hidden');
-            }
+    if (name) {
+        // Kirim data ke Google Sheets secara otomatis saat halaman dibuka
+        fetch(`${scriptURL}?name=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}&comp=${encodeURIComponent(comp)}&action=Halaman Dilihat`)
+            .catch(error => console.error('Error!', error.message));
+    }
+});
 
-            // Link WA Ke Pak Piator
-            const pesanWA = `Halo Pak Piator, saya ${name} (${role}) dari ${comp}. Saya sedang mereview link Invila™ dan ingin diskusi teknis lebih lanjut.`;
-            document.getElementById('wa-link').href = `https://wa.me/6285890135859?text=${encodeURIComponent(pesanWA)}`;
-        });
+// Update fungsi download agar tercatat juga di dashboard
+function downloadReport() {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    // ... (kode download yang sudah ada) ...
 
-        function downloadReport() {
-            const params = new URLSearchParams(window.location.search);
-            const role = params.get('role');
-            const comp = params.get('comp') || "Industrial";
-            const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
-            
-            let fileName = (role === 'CFO') ? "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf" : "THE_HERO_REPORT_VALIDATION.pdf";
-            
-            alert(`Mempersiapkan Dokumen Khusus ${comp}...\nSilakan cek folder Download Anda.`);
-            window.open(baseUrl + fileName, '_blank');
-        }
+    // Catat aksi download ke Google Sheets
+    fetch(`${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`)
+    window.open(baseUrl + fileName, '_blank');
+}
     </script>
 </body>
 </html>
