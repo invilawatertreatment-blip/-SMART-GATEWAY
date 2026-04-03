@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invila™ | Smart Gateway</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+    <style>F
         .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
         .hero-text { transition: all 0.5s ease-in-out; }
     </style>
@@ -21,7 +21,15 @@
 
     <header class="gradient-bg text-white py-16 px-6">
         <div class="max-w-4xl mx-auto">
-            <div id="video-container" class="hidden mb-8 rounded-xl overflow-hidden shadow-2xl border-4 border-blue-400/20">
+            <div id="<div id="video-container" class="hidden mb-8 rounded-xl overflow-hidden shadow-2xl border-4 border-blue-400/20">
+    <video id="main-player" autoplay muted loop playsinline class="w-full h-auto">
+        <source src="KIW%201.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p class="bg-blue-900/50 text-white text-[10px] p-2 text-center font-mono uppercase tracking-widest">
+        Live Context: Site Condition at <span class="comp-name">Unit</span>
+    </p>
+</div>" class="hidden mb-8 rounded-xl overflow-hidden shadow-2xl border-4 border-blue-400/20">
                 <video id="player" autoplay muted loop class="w-full h-auto">
                     <source src="https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/KIW%201.mp4" type="video/mp4">
                 </video>
@@ -64,33 +72,73 @@
         </div>
     </section>
 
-    <script>
-       // Gantilah URL di bawah dengan URL Web App dari Google Apps Script Bapak
-const scriptURL = 'URL_WEB_APP_BAPAK_DI_SINI';
+<script>
+    // 1. GANTI DENGAN URL WEB APP BAPAK (DARI GOOGLE APPS SCRIPT)
+    const scriptURL = 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI';
 
-window.addEventListener('DOMContentLoaded', (event) => {
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-    const role = params.get('role');
-    const comp = params.get('comp');
+    window.addEventListener('DOMContentLoaded', (event) => {
+        // 2. TANGKAP DATA DARI URL
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name') || "Rekan Strategic";
+        const role = (params.get('role') || "Executive").toUpperCase();
+        const comp = params.get('comp') || "Mitra Industri";
 
-    if (name) {
-        // Kirim data ke Google Sheets secara otomatis saat halaman dibuka
-        fetch(`${scriptURL}?name=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}&comp=${encodeURIComponent(comp)}&action=Halaman Dilihat`)
-            .catch(error => console.error('Error!', error.message));
+        // 3. UPDATE TEKS PENYAMBUTAN & PERUSAHAAN
+        document.getElementById('welcome-msg').innerText = `SELAMAT DATANG PAK ${name} (${role})`;
+        const compElements = document.getElementsByClassName('comp-name');
+        for(let el of compElements) { el.innerText = comp; }
+
+        // 4. LOGIKA TAMPILAN (CFO VS FM)
+        const videoBox = document.getElementById('video-container');
+        const player = document.getElementById('main-player');
+
+        if (role === 'CFO') {
+            document.getElementById('main-headline').innerHTML = `EBITDA Protection & <br>Capital Efficiency di ${comp}`;
+            document.getElementById('sub-headline').innerText = "Model Zero-CapEx kami mengeliminasi biaya investasi berat dan mengubah tagihan PDAM menjadi efisiensi laba bersih secara instan.";
+            document.getElementById('btn-report-type').innerText = "Financial Impact Report";
+            if (videoBox) videoBox.classList.add('hidden'); // Sembunyikan video untuk CFO
+        } else {
+            // TAMPILAN UNTUK FM (BENI)
+            document.getElementById('main-headline').innerHTML = `99.98% Water Availability & <br>Operational Stability di ${comp}`;
+            document.getElementById('sub-headline').innerText = `Dirancang khusus untuk standar keandalan Plant Manager di ${comp}. Sistem Autopilot SCADA-IoT membebaskan tim Anda dari rutinitas maintenance.`;
+            document.getElementById('btn-report-type').innerText = "Technical Hero Report";
+            
+            // MUNCULKAN VIDEO UNTUK FM
+            if (videoBox) {
+                videoBox.classList.remove('hidden');
+                if (player) player.play().catch(e => console.log("Autoplay ditahan"));
+            }
+        }
+
+        // 5. UPDATE LINK WHATSAPP DINAMIS
+        const pesanWA = `Halo Pak Piator, saya ${name} (${role}) dari ${comp}. Saya sedang mereview link Invila™ dan ingin diskusi teknis lebih lanjut.`;
+        document.getElementById('wa-link').href = `https://wa.me/6285890135859?text=${encodeURIComponent(pesanWA)}`;
+
+        // 6. KIRIM DATA KE DASHBOARD (LOG KUNJUNGAN)
+        if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
+            fetch(`${scriptURL}?name=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}&comp=${encodeURIComponent(comp)}&action=Halaman Dilihat`)
+                .catch(error => console.error('Error Dashboard!', error.message));
+        }
+    });
+
+    // 7. FUNGSI DOWNLOAD & CATAT KE DASHBOARD
+    function downloadReport() {
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name') || "Unknown";
+        const role = (params.get('role') || "").toUpperCase();
+        const comp = params.get('comp') || "Industrial";
+        
+        const baseUrl = "https://invilawatertreatment-blip.github.io/-SMART-GATEWAY/assets/docs/";
+        let fileName = (role === 'CFO') ? "INVILA_STRATEGIC_FINANCIAL_IMPACT.pdf" : "THE_HERO_REPORT_VALIDATION.pdf";
+
+        // Kirim log download ke dashboard
+        if (scriptURL !== 'MASUKKAN_URL_WEB_APP_BAPAK_DI_SINI') {
+            fetch(`${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`);
+        }
+
+        alert(`Mempersiapkan Dokumen Khusus ${comp}...\nSilakan cek folder Download Anda.`);
+        window.open(baseUrl + fileName, '_blank');
     }
-});
-
-// Update fungsi download agar tercatat juga di dashboard
-function downloadReport() {
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-    // ... (kode download yang sudah ada) ...
-
-    // Catat aksi download ke Google Sheets
-    fetch(`${scriptURL}?name=${encodeURIComponent(name)}&action=Download Report`)
-    window.open(baseUrl + fileName, '_blank');
-}
-    </script>
+</script>
 </body>
 </html>
